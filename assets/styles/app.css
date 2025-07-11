@@ -1,0 +1,24 @@
+.card {
+    background-color: #ffffff;
+    border: 2px solid #DC143C;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(220, 20, 60, 0.4);
+    border-color: #000000;
+}
+
+.btn-buy {
+    background-color: #DC143C;
+    color: white;
+    border-color: white;
+    transition: all 0.2s ease;
+}
+
+.btn-buy:hover {
+    background-color: #ffffff;
+    color: #DC143C;
+    border-color: #DC143C;
+}

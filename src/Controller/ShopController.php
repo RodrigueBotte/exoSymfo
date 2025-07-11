@@ -20,7 +20,6 @@ final class ShopController extends AbstractController
         }
         else{
             $produit = $em->getRepository(Produits::class)->findAll();
-
         }
 
         return $this->render('shop/shop.html.twig', [

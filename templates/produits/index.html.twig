@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits index{% endblock %}
+
+{% block body %}
+    <h1>Produits index</h1>
+
+    {# <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Modele</th>
+                <th>Prix</th>
+                <th>Image</th>
+                <th>Type</th>
+                <th>Stock</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit in produits %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.name }}</td>
+                <td>{{ produit.modele }}</td>
+                <td>{{ produit.prix }}</td>
+                <td>{{ produit.image }}</td>
+                <td>{{ produit.type }}</td>
+                <td>{{ produit.stock }}</td>
+                <td>
+                    <a href="{{ path('app_produits_show', {'id': produit.id}) }}">show</a>
+                    <a href="{{ path('app_produits_edit', {'id': produit.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_produits_new') }}">Create new</a> #}
+
+
+    {% for produit in produits %}  
+        <div class="card" style="width: 18rem;">
+            <img src="{{ produit.image}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{produit.name}}</h5>
+                <h5>{{produit.prix}} €</h5>
+                <a href="{{ path('app_produits_show', {'id': produit.id}) }}" class="btn btn-primary">Voir l'article</a>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

@@ -12,12 +12,11 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
-        
+        $produits = $em->getRepository(Produits::class)->findAll();
         return $this->render('home/home.html.twig', [
-            'controller_name' => 'HomeController',
-            
+            'produit' => $produits,
         ]);
     }
 }

@@ -6,4 +6,13 @@
 <h1 class="text-center m-5">Jordan - Vétements et Chaussures</h1>
 
 <img src="{{asset('images/jordan.avif')}}" alt="" class="img-fluid w-100 h-100 object-fit-cover">
+
+    <div class="mt-5">
+        {% for produits in produit %}
+            {% if produits.type == 'Chaussure' %}
+                <h1>{{produits.name}}</h1>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
 {% endblock %}

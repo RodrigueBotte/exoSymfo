@@ -10,7 +10,9 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -61,7 +63,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
+    public function verifyUserEmail(Request $request, TranslatorInterface $translator, MailerInterface $mailer): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -74,6 +76,18 @@ class RegistrationController extends AbstractController
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
             return $this->redirectToRoute('app_register');
+        }
+        if ($user && $user->isVerified()) {
+            $email = (new Email())
+                ->from('jordanMagasin@gmail.com')
+                ->to($user->getEmail())
+                ->subject('Offre de bienvenue')
+                ->html($this->renderView('mailer/mailer.html.twig', [
+                    'user' => $user,
+                    'code_promo' => 'JORDAN10',
+                ]));
+
+            $mailer->send($email);
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates

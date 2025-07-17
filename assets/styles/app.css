@@ -26,3 +26,15 @@
 .color-jordan{
     color: #DC143C;
 }
+
+.btn-back{
+    background-color: #000000;
+    color: white;
+    border-color: white;
+    transition: all 0.2s ease;
+}
+.btn-back:hover {
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #000000;
+}

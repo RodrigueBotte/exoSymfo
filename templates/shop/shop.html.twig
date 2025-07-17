@@ -21,7 +21,7 @@
                         <h5 class="card-title">{{produit.name}} {{produit.modele}}</h5>
                         <p class="card-text">{{produit.prix}}€</p>
                         <p class="card-text">Stock : {{produit.stock}}</p>
-                        <a href="#" class="btn btn-buy">Acheter</a>
+                        <a href="{{ path('app_produits_show', {'id': produit.id}) }}" class="btn btn-buy">Voir le produit</a>
                     </div>
                 </div>
             {% endif %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,17 @@ class Produits
 
     #[ORM\Column]
     private ?int $stock = null;
+
+    /**
+     * @var Collection<int, PanierProduit>
+     */
+    #[ORM\OneToMany(targetEntity: PanierProduit::class, mappedBy: 'produit')]
+    private Collection $panier;
+
+    public function __construct()
+    {
+        $this->panier = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +118,36 @@ class Produits
     public function setStock(int $stock): static
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PanierProduit>
+     */
+    public function getPanier(): Collection
+    {
+        return $this->panier;
+    }
+
+    public function addPanier(PanierProduit $panier): static
+    {
+        if (!$this->panier->contains($panier)) {
+            $this->panier->add($panier);
+            $panier->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(PanierProduit $panier): static
+    {
+        if ($this->panier->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getProduit() === $this) {
+                $panier->setProduit(null);
+            }
+        }
 
         return $this;
     }

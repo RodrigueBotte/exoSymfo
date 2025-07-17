@@ -4,18 +4,17 @@
 
 {% block body %}
 
-    <div class="container">
+    <div class="container d-flex justify-content-center">
         <div class="card p-2" style="width: 18rem;">
-                    <img src="{{produit.image}}" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{produit.name}} {{produit.modele}}</h5>
-                        <p class="card-text">{{produit.prix}}€</p>
-                        <p class="card-text">Stock : {{produit.stock}}</p>
-                        <a href="#" class="btn btn-buy">Acheter</a>
-                    </div>
-                </div>
-
+            <img src="{{produit.image}}" class="card-img-top" alt="">
+            <div class="card-body">
+                <h5 class="card-title">{{produit.name}} {{produit.modele}}</h5>
+                <p class="card-text">{{produit.prix}}€</p>
+                <p class="card-text">Stock : {{produit.stock}}</p>
+                <a href="#" class="btn btn-buy">Acheter</a>
+            </div>
+        </div>
     </div>
     
-    <a href="{{ path('app_produits_index') }}">Retour au shop</a>
+    <a href="{{ path('app_shop') }}" class="btn btn-back m-5">Retour au shop</a>
 {% endblock %}

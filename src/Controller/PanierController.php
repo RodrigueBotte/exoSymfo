@@ -28,7 +28,7 @@ final class PanierController extends AbstractController
         $panierProduit = $panierProduitRepo->findOneBy(['panier'=>$panier, 'produit'=>$prod]);
         
         if ($panierProduit) {
-            $panier->setQuantity($panierProduit->getQuantity() + 1);
+            $panierProduit->setQuantity($panierProduit->getQuantity() + 1);
         }
         else {
             $panierProduit = new PanierProduit();
@@ -39,9 +39,32 @@ final class PanierController extends AbstractController
         }
 
         $em->flush();
+
+        // return $this->render('panier/panier.html.twig', [
+        //     'controller_name' => 'PanierController',
+        // ]);
+        return $this->redirectToRoute('app_panierView');
+    }
+
+    #[Route('/panier', name: 'app_panierView')]
+    public function panierView(EntityManagerInterface $em, Security $secu): Response
+    {
         
-        return $this->render('panier/index.html.twig', [
-            'controller_name' => 'PanierController',
+        $user = $secu->getUser();
+        dump($user);
+        $panier = $em->getRepository(Panier::class)->findOneBy(['user'=>$user]);
+        
+        $panierView = $em->getRepository(PanierProduit::class)->findBy(['panier'=>$panier]);
+        dump($panierView);
+        
+        $total = 0;
+        foreach ($panierView as $item) {
+            $total += $item->getProduit()->getPrix() * $item->getQuantity();
+        }
+        
+        return $this->render('panier/panier.html.twig', [
+            'panierView' => $panierView,
+            'total' => $total
         ]);
     }
 }

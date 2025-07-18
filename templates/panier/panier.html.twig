@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">🛒 Votre panier</h1>
+
+    {% if panierView is empty %}
+        <div class="alert alert-info text-center">
+            Votre panier est vide pour le moment.
+        </div>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle text-center shadow-sm rounded-4 overflow-hidden">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nom du produit</th>
+                        <th>Modèle</th>
+                        <th>Prix</th>
+                        <th>Quantité</th>
+                        <th>Image</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for panier in panierView %}
+                        <tr>
+                            <td class="fw-semibold">{{ panier.produit.name }}</td>
+                            <td>{{ panier.produit.modele }}</td>
+                            <td>{{ panier.produit.prix }} €</td>
+                            <td>{{ panier.quantity }} </td>
+                            <td>
+                                <img src="{{ asset(panier.produit.image) }}" alt="image {{ panier.produit.name }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                            </td>
+                            <td>
+                                {{total}}
+                            </td>
+                            <td>
+                                {{ (panier.produit.prix * panier.quantity)}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
